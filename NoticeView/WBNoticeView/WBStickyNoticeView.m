@@ -17,9 +17,9 @@
     WBStickyNoticeView *notice = [[WBStickyNoticeView alloc]initWithView:view title:title];
 
     notice.sticky = YES;
-    
     return notice;
 }
+
 
 - (void)show
 {
@@ -27,8 +27,10 @@
     CGFloat viewWidth = self.view.bounds.size.width;
     
     // Locate the images
-    NSString *path = [[[NSBundle mainBundle]resourcePath]stringByAppendingPathComponent:@"NoticeView.bundle"];
-    NSString *noticeIconImageName = [path stringByAppendingPathComponent:@"up.png"];
+    //NSString *path = [[[NSBundle mainBundle]resourcePath]stringByAppendingPathComponent:@"NoticeView.bundle"];
+    if(!self.image){
+        self.image = @"up";
+    }
     
     NSInteger numberOfLines = 1;
     CGFloat messageLineHeight = 30.0;
@@ -70,7 +72,7 @@
     UIImageView *iconView = nil;
     CGFloat labelLeftPos = self.titleLabel.frame.origin.x;
     iconView = [[UIImageView alloc]initWithFrame:CGRectMake(labelLeftPos - 25, 9.0, 18, 13.0)];
-    iconView.image = [UIImage imageWithContentsOfFile:noticeIconImageName];
+    iconView.image = [UIImage imageNamed:self.image];
     iconView.contentMode = UIViewContentModeScaleAspectFit;
     iconView.alpha = 0.8;
     [self.gradientView addSubview:iconView];

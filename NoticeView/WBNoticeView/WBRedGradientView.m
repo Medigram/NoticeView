@@ -14,9 +14,9 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    
-    UIColor *redTop = [UIColor colorWithRed:167/255.0f green:26/255.0f blue:20/255.0f alpha:1.0];
-    UIColor *redBot = [UIColor colorWithRed:134/255.0f green:9/255.0f blue:7/255.0f alpha:1.0];
+    // 167/26/20
+    UIColor *redTop = [UIColor colorWithRed:252/255.0f green:28/255.0f blue:65/255.0f alpha:1.0];
+    UIColor *redBot = [UIColor colorWithRed:225/255.0f green:3/255.0f blue:41/255.0f alpha:1.0];
     
     CAGradientLayer *gradient = [CAGradientLayer layer];
     gradient.frame = self.bounds;
@@ -41,11 +41,11 @@
     [self addSubview:secondTopRedLine];
     
     UIView *firstBotRedLine = [[UIView alloc]initWithFrame:CGRectMake(0.0, self.bounds.size.height - 1, self.frame.size.width, 1.0)];
-    firstBotRedLine.backgroundColor = [UIColor colorWithRed:134/255.0f green:9/255.0f blue:7/255.0f alpha:1.0];
+    firstBotRedLine.backgroundColor = [UIColor colorWithRed:99/255.0f green:2/255.0f blue:18/255.0f alpha:1.0];
     [self addSubview:firstBotRedLine];
     
     UIView *secondBotDarkLine = [[UIView alloc]initWithFrame:CGRectMake(0.0, self.bounds.size.height, self.frame.size.width, 1.0)];
-    secondBotDarkLine.backgroundColor = [UIColor colorWithRed:52/255.0f green:4/255.0f blue:3/255.0f alpha:1.0];
+    secondBotDarkLine.backgroundColor = [UIColor colorWithRed:153/255.0f green:14/255.0f blue:0/255.0f alpha:1.0];
     [self addSubview:secondBotDarkLine];
 }
 

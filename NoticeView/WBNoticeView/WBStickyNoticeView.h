@@ -13,6 +13,8 @@
  */
 @interface WBStickyNoticeView : WBNoticeView
 
+@property (nonatomic, retain) NSString *image;
+
 ///-------------------------------
 /// @name Creating a Sticky Notice
 ///-------------------------------
@@ -25,5 +27,5 @@
  @return The newly created sticky notice object.
  */
 + (WBStickyNoticeView *)stickyNoticeInView:(UIView *)view title:(NSString *)title;
-
+- (void)setImage:(NSString*)image;
 @end

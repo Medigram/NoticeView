@@ -68,6 +68,9 @@ typedef enum WBNoticeViewSlidingMode {
  */
 @property (nonatomic, readwrite) NSTimeInterval delay;
 
+@property (nonatomic, readwrite) NSTimeInterval preDelay;
+
+
 /**
  The amount of transparency applied to the notice. Values can range between `0.0` (transparent) and `1.0` (opaque). Values outside this range are clamped to `0.0` or `1.0`.
  
@@ -103,6 +106,7 @@ typedef enum WBNoticeViewSlidingMode {
 */
 @property WBNoticeViewSlidingMode slidingMode;
 
+- (void)showNotice;
 
 ///----------------------------------------
 /// @name Showing and Dismissing the Notice

@@ -20,6 +20,7 @@
 @property(nonatomic, strong) WBNoticeView *currentNotice;
 @property(nonatomic, copy) void (^dismissalBlock)(BOOL dismissedInteractively);
 @property(nonatomic, strong) NSTimer *displayTimer;
+@property(nonatomic, strong) NSTimer *preDisplayTimer;
 
 - (void)dismissNoticeWithDuration:(NSTimeInterval)duration
                             delay:(NSTimeInterval)delay
@@ -39,6 +40,7 @@
 @synthesize title = _title;
 @synthesize duration = _duration;
 @synthesize delay = _delay;
+@synthesize preDelay = _preDelay;
 @synthesize alpha = _alpha;
 @synthesize originY = _originY;
 @synthesize sticky = _sticky;
@@ -54,9 +56,11 @@
         self.message = @"Information not provided";
         self.duration = 0.5;
         self.alpha = 1.0;
-        self.delay = 2.0;
+        self.delay = 0.0;
+        self.preDelay = 0.75;
         self.tapToDismissEnabled = YES;
         self.slidingMode = WBNoticeViewSlidingModeDown;
+        
     }
     return self;
 }
@@ -64,6 +68,11 @@
 - (NSTimeInterval)delay
 {
     return [self isSticky] ? 0.0 : _delay;
+}
+
+- (NSTimeInterval)preDelay
+{
+    return _preDelay;
 }
 
 - (void)show
@@ -103,8 +112,11 @@
     {
         self.gradientView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
     }
-    
+    self.preDisplayTimer = [NSTimer scheduledTimerWithTimeInterval:self.preDelay target:self selector:@selector(showNotice) userInfo:nil repeats:NO];
     // Go ahead, display it
+   }
+
+- (void)showNotice{
     [UIView animateWithDuration:self.duration animations:^ {
         CGRect newFrame = self.gradientView.frame;
         //add scroll offset if scrolled
@@ -126,6 +138,7 @@
             [self dismissNoticeWithDuration:self.duration delay:self.delay hiddenYOrigin:self.hiddenYOrigin];
         }
     }];
+
 }
 
 - (void)dismissNoticeWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay hiddenYOrigin:(CGFloat)hiddenYOrigin
@@ -148,12 +161,14 @@
 
 - (void)dismissNotice
 {
+    [self.preDisplayTimer invalidate];
     [self.displayTimer invalidate];
     [self dismissNoticeWithDuration:self.duration delay:self.delay hiddenYOrigin:self.hiddenYOrigin];
 }
 
 - (void)dismissNoticeInteractively
 {
+    [self.preDisplayTimer invalidate];
     [self.displayTimer invalidate];
     if (self.dismissalBlock) {
         self.dismissalBlock(YES);
@@ -183,6 +198,7 @@
 
 - (void)cleanup
 {
+    [self.preDisplayTimer invalidate];
     [self.displayTimer invalidate];
     [self.gradientView removeFromSuperview];
     self.gradientView = nil;
